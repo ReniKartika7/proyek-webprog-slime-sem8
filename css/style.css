@@ -905,6 +905,39 @@ input[type="radio"]:checked{
     text-align: center;
 }
 
+table{
+    width: 80%;
+    margin: auto;
+    text-align: left;
+    border-collapse: collapse;
+    min-width: 360px;
+}
+
+table thead{
+    background-color: var(--main-color);
+}
+
+table tbody th{
+    text-align: center;
+}
+
+table th, table td{
+    padding: 1rem;
+}
+
+table tbody tr{
+    border-bottom: thin solid #dddddd;
+}
+
+table tbody tr:nth-of-type(even){
+    background-color: var(--lighter-yellow);
+}
+
+.manage .row{
+    margin: 2rem 0;
+    justify-content: center;
+}
+
 /* Footer */
 #footer{
     color: white;

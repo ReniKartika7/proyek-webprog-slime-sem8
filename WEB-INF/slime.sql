@@ -29,6 +29,7 @@ VALUES ('admin@slime.com', 'Admin', '0812345678', 'admin123', 'none', 1),
 -- Create Table Address
 CREATE TABLE IF NOT EXISTS `address` (
     address_id INT(10) AUTO_INCREMENT NOT NULL,
+    user_id INT(10) NOT NULL,
     address_detail VARCHAR(255) NOT NULL,
     address_full_name VARCHAR(50) NOT NULL,
     address_phone_number VARCHAR(20) NOT NULL,
@@ -36,13 +37,14 @@ CREATE TABLE IF NOT EXISTS `address` (
     address_district VARCHAR(150) NOT NULL,
     address_subdistrict VARCHAR(150) NOT NULL,
     address_postal_code VARCHAR(10) NOT NULL,
-    PRIMARY KEY (address_id)
+    PRIMARY KEY (address_id),
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 -- Dummy data untuk address
-INSERT INTO `address`(address_detail, address_full_name, address_phone_number, address_province, address_district, address_subdistrict, address_postal_code)
-VALUES ('Perumahan ABC Blok ZZ no 226', 'Reni Kartika', '08192912345', 'Kepulauan Bangka Belitung', 'Belitung Timur', 'Manggar', '33514'),
-('Jalan Gatot Subroto No 226', 'Brandon', '0865372078', 'DKI Jakarta', 'Jakarta Barat', 'Kebon Jeruk', '11234');
+INSERT INTO `address`(user_id, address_detail, address_full_name, address_phone_number, address_province, address_district, address_subdistrict, address_postal_code)
+VALUES (2, 'Perumahan ABC Blok ZZ no 226', 'Reni Kartika', '08192912345', 'Kepulauan Bangka Belitung', 'Belitung Timur', 'Manggar', '33514'),
+(2, 'Jalan Gatot Subroto No 226', 'Brandon', '0865372078', 'DKI Jakarta', 'Jakarta Barat', 'Kebon Jeruk', '11234');
 
 -- Create Table SnackCategory
 CREATE TABLE IF NOT EXISTS snack_category (
@@ -77,7 +79,7 @@ CREATE TABLE IF NOT EXISTS snacks (
 
 -- Dummy data untuk Snack
 INSERT INTO snacks (snack_name, snack_price, snack_stock, snack_cover_url, snack_category_id, snack_detail)
-VALUES ('Myojo Mapo Men: Mapo Tofu Cup Ramen (1 Cup)', 35000, 50, 'https://drive.google.com/uc?export=view&id=1Z_rmIj_qy_vY76IfU-fCTpbYQ54jV-iY', 2, "Mapo tofu is one of the most popular Chinese dishes in Japan, and a popular inspiration for all sorts of delicious fusion foods. This cup ramen's savory broth has scallions, ground pork, and tofu, which re-hydrate and marinate in the spicy broth that clings to the noodles.")
+VALUES ('Myojo Mapo Men: Mapo Tofu Cup Ramen (1 Cup)', 35000, 50, 'https://drive.google.com/uc?export=view&id=1Z_rmIj_qy_vY76IfU-fCTpbYQ54jV-iY', 2, "Mapo tofu is one of the most popular Chinese dishes in Japan, and a popular inspiration for all sorts of delicious fusion foods. This cup ramen's savory broth has scallions, ground pork, and tofu, which re-hydrate and marinate in the spicy broth that clings to the noodles.");
 
 
 -- Create table Cart

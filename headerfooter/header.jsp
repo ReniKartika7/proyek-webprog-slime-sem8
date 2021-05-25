@@ -67,7 +67,7 @@
                     <i class="fas fa-cog"></i>
                 </a>
                 <div class="dropdown-content" id="dropdown-content">
-                    <a href="#">My Address</a>
+                    <a href="<%= root %>/address/myAddress.jsp">My Address</a>
                     <a href="<%= root %>/customer/changePassword.jsp">Change Password</a>
                     <a href="<%= root %>/doLogout.jsp">Log Out</a>
                 </div>
@@ -80,7 +80,6 @@
                 <div class="dropdown-content" id="dropdown-content">
                     <a href="<%= manageUserPath %>">Manage Users</a>
                     <a href="#">Manage Products</a>
-                    <a href="#">Manage Payment Type</a>
                     <a href="<%= root %>/doLogout.jsp">Log Out</a>
                 </div>
             </div>

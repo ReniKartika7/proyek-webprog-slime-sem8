@@ -98,7 +98,7 @@
 
         if (flag == 5){
             String query ="UPDATE users SET user_email = ?, user_name = ?, user_phone = ?, user_gender = ?, is_admin = ? WHERE user_id = ?";
-            Connect.update(query, email, name, phoneNumber, gender, role, id);
+            Connect.update(query, email, name, phoneNumber, gender, role.equals("admin") ? "1" : "0", id);
     
             response.sendRedirect("manageCustomer.jsp");
         }else{

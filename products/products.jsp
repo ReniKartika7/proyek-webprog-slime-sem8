@@ -80,7 +80,7 @@
 
                     ResultSet rss = Connect.query(query, like, like2);
                     while(rss.next()){
-                        %>
+                %>
                         <div class="row product-row">
                             <div class="col product-item">
                                 <div class="product-item-top">
