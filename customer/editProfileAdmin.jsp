@@ -5,11 +5,11 @@
 <%
     String id = request.getParameter("id");
     if(!users("admin")){
-        session.setAttribute("fromNotAdmin", "yes");
+        session.setAttribute("alertMessage", "You are not registered as an Admin !");
         response.sendRedirect(root);
         return;
     }else if(id == null || id.isEmpty()){
-        session.setAttribute("invalidUser", "yes");
+        session.setAttribute("alertMessage", "Invalid User ID!");
         response.sendRedirect("manageCustomer.jsp");
         return;
     }
@@ -17,7 +17,7 @@
 
     ResultSet rs = Connect.query(query, id);
     if(!rs.first()){
-        session.setAttribute("invalidUser", "yes");
+        session.setAttribute("alertMessage", "Invalid User ID!");
         response.sendRedirect("manageCustomer.jsp");
         return;
     }

@@ -2,7 +2,7 @@
 
 <%
     if(users("guest")){
-        session.setAttribute("fromCartGuest", "yes");
+        session.setAttribute("alertMessage", "Please Login first!");
         response.sendRedirect(loginPath);
         return;
     }
@@ -11,7 +11,7 @@
     
     if(id == null){
         if(users("admin")){
-            session.setAttribute("fromCartAdmin", "yes");
+            session.setAttribute("alertMessage", "You are not login as a customer");
             response.sendRedirect(root);
             return;
         }else{
@@ -22,7 +22,7 @@
         }
     }else{
         if(!users("admin")){
-            session.setAttribute("fromNotAdmin", "yes");
+            session.setAttribute("alertMessage", "You are not registered as an Admin !");
             response.sendRedirect(root);
             return;
         }else{
@@ -32,7 +32,7 @@
             if(id.equals(user.sId())){
                 request.getServletContext().getRequestDispatcher("/doLogout.jsp").forward(request, response);
             }else{
-                session.setAttribute("deleteDone", "yes");
+                session.setAttribute("alertMessage", "Account has been deleted!");
                 response.sendRedirect("manageCustomer.jsp");
             }
         }

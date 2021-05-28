@@ -4,7 +4,7 @@
 
 <%
     if(users("guest")){
-        session.setAttribute("fromCartGuest", "yes");
+        session.setAttribute("alertMessage", "Please Login first!");
         response.sendRedirect(loginPath);
         return;
     }
@@ -13,7 +13,7 @@
     ResultSet rsp = null, rspt = null;
     String id = request.getParameter("id");
     if(id == null || id.isEmpty()){
-        session.setAttribute("InvalidProduct", "yes");
+        session.setAttribute("alertMessage", "Invalid Product ID!");
         response.sendRedirect(location);
         return;
     }
@@ -22,7 +22,7 @@
     rsp = Connect.query(query, id);
 
     if(!rsp.first()){
-        session.setAttribute("InvalidProduct", "yes");
+        session.setAttribute("alertMessage", "Invalid Product ID!");
         response.sendRedirect(location);
         return;
     }

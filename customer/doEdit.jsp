@@ -2,7 +2,7 @@
 
 <%
     if(users("guest")){
-        session.setAttribute("fromCartGuest", "yes");
+        session.setAttribute("alertMessage", "Please Login first!");
         response.sendRedirect(loginPath);
         return;
     }
@@ -13,7 +13,7 @@
 
     if (asAdmin) {
         if(!users("admin")){
-            session.setAttribute("fromNotAdmin", "yes");
+            session.setAttribute("alertMessage", "You are not registered as an Admin !");
             response.sendRedirect(root);
             return;
         }
@@ -21,14 +21,14 @@
         String query = "SELECT * FROM users WHERE user_id = ?";
         ResultSet rs = Connect.query(query, id);
         if(!rs.first()){
-            session.setAttribute("invalidUser", "yes");
+            session.setAttribute("alertMessage", "Invalid User ID!");
             response.sendRedirect("manageCustomer.jsp");
             return;
         }
         oldEmail = rs.getString("user_email");
     }else{
         if(users("admin")){
-            session.setAttribute("fromCartAdmin", "yes");
+            session.setAttribute("alertMessage", "You are not login as a customer");
             response.sendRedirect(root);
             return;
         }
@@ -100,6 +100,7 @@
             String query ="UPDATE users SET user_email = ?, user_name = ?, user_phone = ?, user_gender = ?, is_admin = ? WHERE user_id = ?";
             Connect.update(query, email, name, phoneNumber, gender, role.equals("admin") ? "1" : "0", id);
     
+            session.setAttribute("alertMessage", "Product has been updated!");
             response.sendRedirect("manageCustomer.jsp");
         }else{
             response.sendRedirect("editProfile.jsp?id=" + id);
@@ -109,7 +110,7 @@
             String query ="UPDATE users SET user_email = ?, user_name = ?, user_phone = ?, user_gender = ? WHERE user_id = ?";
             Connect.update(query, email, name, phoneNumber, gender, id);
     
-            session.setAttribute("fromEditCustomer", "yes");
+            session.setAttribute("alertMessage", "Your profile has been updated!");
 
             response.sendRedirect("myProfile.jsp");
         }else{

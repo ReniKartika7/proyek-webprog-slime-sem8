@@ -3,16 +3,12 @@
 <%@ include file="/WEB-INF/services.jsp" %>
 
 <%
-    if(users("guest")){
-        session.setAttribute("alertMessage", "Please Login first!");
-        response.sendRedirect(loginPath);
-        return;
-    }else if(users("admin")){
-        session.setAttribute("alertMessage", "You are not login as a customer");
+    if(!users("admin")){
+        session.setAttribute("alertMessage", "You are not registered as an Admin !");
         response.sendRedirect(root);
         return;
     }
-    
+
     String alertMessage = (String) session.getAttribute("alertMessage");
 %>
 
@@ -21,7 +17,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Address - Slime</title>
+    <title>Manage Product - Slime</title>
     <link rel="shortcut icon" type="image/png" href="<%= root %>/asset/slime_logo.png">
     <!-- CSS -->
     <link rel="stylesheet" href="<%= root %>/css/style.css">
@@ -31,6 +27,7 @@
     
 </head>
 <body>
+
     <input type="hidden" name="alertMessage" id="alertMessage" value="<%= alertMessage %>">
     <%
         if(alertMessage != null){
@@ -42,31 +39,30 @@
     <%
         }
     %>
-
+    
     <div class="header" id="header">
         <%@ include file="/headerfooter/header.jsp" %>
     </div>
     
     <div class="container manage">
-        <h1>My Address</h1>
+        <h1>Manage User</h1>
         <div class="row">
             <table>
                 <thead>
                     <tr>
                         <th class="center" scope="col">ID</th>
-                        <th scope="col">Address</th>
-                        <th scope="col">Full Name</th>
-                        <th scope="col">Phone Number</th>
-                        <th scope="col">Province</th>
-                        <th scope="col">District</th>
-                        <th scope="col">Sub District</th>
-                        <th scope="col">Postal Code</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Phone</th>
+                        <th scope="col">Gender</th>
+                        <th scope="col">Role</th>
                         <th scope="col"></th>
                     </tr>
                 </thead>
                 <tbody>
                     <%
-                        int limit = 5;
+                        int limit = 10;
+                        String searchKeyword = request.getParameter("search");
                         String pageParam = request.getParameter("page");
     
                         int pageNumber = 1;
@@ -77,24 +73,26 @@
                         }
     
                         int offset = (pageNumber - 1) * limit;
-     
-                        String query = String.format("SELECT * FROM address JOIN users ON address.user_id = users.user_id WHERE users.user_id = ? ORDER BY address_id ASC LIMIT %d, %d", offset, limit);
+                        String where = "";
+                        String like = "%" + (searchKeyword == null ? "" : searchKeyword) + "%";
 
-                        ResultSet rs = Connect.query(query, user.sId());
+                        where = "WHERE user_name LIKE ?";
+     
+                        String query = String.format("SELECT * FROM users %s ORDER BY user_id ASC LIMIT %d, %d", where, offset, limit);
+
+                        ResultSet rs = Connect.query(query, like);
                         while(rs.next()){
                     %>
                             <tr>
-                                <th scope="row"><%= rs.getInt("address_id") %></th>
-                                <td><%= rs.getString("address_detail") %></td>
-                                <td><%= rs.getString("address_full_name") %></td>
-                                <td><%= rs.getString("address_phone_number") %></td>
-                                <td><%= rs.getString("address_province") %></td>
-                                <td><%= rs.getString("address_district") %></td>
-                                <td><%= rs.getString("address_subdistrict") %></td>
-                                <td><%= rs.getString("address_postal_code") %></td>
+                                <th scope="row"><%= rs.getInt("user_id") %></th>
+                                <td><%= rs.getString("user_email") %></td>
+                                <td><%= rs.getString("user_name") %></td>
+                                <td><%= rs.getString("user_phone") %></td>
+                                <td><%= rs.getString("user_gender") %></td>
+                                <td><%= rs.getBoolean("is_admin") ? "admin" : "customer" %></td>
                                 <td>
                                     <div>
-                                        <a href="editAddress.jsp?id=<%= rs.getInt("address_id") %>">
+                                        <a href="editProfileAdmin.jsp?id=<%= rs.getInt("user_id") %>">
                                             <i class="fas fa-edit"></i>
                                         </a>
                                     </div>
@@ -112,9 +110,12 @@
                 <ul class="navbar-content">
                     <%
                         String uri = request.getRequestURI() + "?";
+                        if (searchKeyword != null){
+                            uri += "search=" + searchKeyword + "&";
+                        }
                         uri += "page=";
 
-                        rs = Connect.query("SELECT COUNT(*) FROM address JOIN users ON address.user_id = users.user_id WHERE users.user_id = ? ", user.sId());
+                        rs = Connect.query("SELECT COUNT(*) FROM users " + where, like);
                         rs.first();
 
                         int lastPage = (rs.getInt(1) - 1) / limit + 1;
@@ -156,15 +157,8 @@
                 </ul>
             </div>
         </div>
-        <div class="row">
-            <form action="insertAddress.jsp">
-                <div class="form-item form-button">
-                    <button type="submit">Insert New Address</button>
-                </div>
-            </form>
-        </div>
     </div>
-
+    
     <%
         session.setAttribute("alertMessage", null);
     %>

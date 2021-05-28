@@ -4,7 +4,7 @@
 
 <%
     if(users("guest")){
-        session.setAttribute("fromCartGuest", "yes");
+        session.setAttribute("alertMessage", "Please Login first!");
         response.sendRedirect(loginPath);
         return;
     }

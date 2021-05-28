@@ -2,7 +2,7 @@
 
 <%
     if(!users("guest")){
-        session.setAttribute("fromLoginNotGuest", "yes");
+        session.setAttribute("alertMessage", "Please Logout first!");
         response.sendRedirect(root);
         return;
     }
@@ -94,7 +94,7 @@
         session.setAttribute("name", null); 
         session.setAttribute("phoneNumber", null); 
         session.setAttribute("gender", null);
-        session.setAttribute("fromRegister", "yes");
+        session.setAttribute("alertMessage", "Thanks for your registration ! Please Login here!");
 
         response.sendRedirect("login.jsp");
     }else{

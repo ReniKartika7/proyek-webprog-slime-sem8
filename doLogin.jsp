@@ -2,7 +2,7 @@
 
 <%
     if(!users("guest")){
-        session.setAttribute("fromLoginNotGuest", "yes");
+        session.setAttribute("alertMessage", "Please Logout first!");
         response.sendRedirect(root);
         return;
     }

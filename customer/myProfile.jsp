@@ -4,17 +4,16 @@
 
 <%
     if(users("guest")){
-        session.setAttribute("fromCartGuest", "yes");
+        session.setAttribute("alertMessage", "Please Login first!");
         response.sendRedirect(loginPath);
         return;
     }else if(users("admin")){
-        session.setAttribute("fromCartAdmin", "yes");
+        session.setAttribute("alertMessage", "You are not login as a customer");
         response.sendRedirect(root);
         return;
     }
 
-    String fromEditCustomer = (String) session.getAttribute("fromEditCustomer");
-    String fromChangePassword = (String) session.getAttribute("fromChangePassword");
+    String alertMessage = (String) session.getAttribute("alertMessage");
 %>
 
 <!DOCTYPE html>
@@ -36,25 +35,15 @@
         <%@ include file="/headerfooter/header.jsp" %>
     </div>
     
+    <input type="hidden" name="alertMessage" id="alertMessage" value="<%= alertMessage %>">
     <%
-        if(fromEditCustomer != null){
-            if(fromEditCustomer.equals("yes")){
+        if(alertMessage != null){
     %>
         <script type="text/javascript">
-            alert("Your profile has been updated!");
+            var txt = document.getElementById("alertMessage").value;
+            alert(txt);
         </script>   
-
     <%
-            }
-        }else if(fromChangePassword != null){
-            if(fromChangePassword.equals("yes")){
-    %>
-        <script type="text/javascript">
-            alert("Your password has been changed!");
-        </script>   
-
-    <%
-            }
         }
     %>
 
@@ -103,9 +92,8 @@
         </div>
     </div>
 
-    <%    
-        session.setAttribute("fromEditCustomer", null);
-        session.setAttribute("fromChangePassword", null);
+    <%
+        session.setAttribute("alertMessage", null);
     %>
 
     <div class="footer" id="footer">

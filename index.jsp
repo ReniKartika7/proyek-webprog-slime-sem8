@@ -3,10 +3,7 @@
 <%@ include file="/WEB-INF/services.jsp" %>
 
 <%
-    String fromCartAdmin = (String) session.getAttribute("fromCartAdmin");
-    String fromLoginNotGuest = (String) session.getAttribute("fromLoginNotGuest");
-    String fromNotAdmin = (String) session.getAttribute("fromNotAdmin");
-    String InvalidProduct = (String) session.getAttribute("InvalidProduct");
+    String alertMessage = (String) session.getAttribute("alertMessage");
     session.setAttribute("location", root);
 %>
 
@@ -28,39 +25,16 @@
     <div class="header" id="header">
         <%@ include file="/headerfooter/header.jsp" %>
     </div>
+    
+    <input type="hidden" name="alertMessage" id="alertMessage" value="<%= alertMessage %>">
     <%
-        if(fromCartAdmin != null){
-            if(fromCartAdmin.equals("yes")){
+        if(alertMessage != null){
     %>
         <script type="text/javascript">
-            alert("Please Login as a Customer!");
+            var txt = document.getElementById("alertMessage").value;
+            alert(txt);
         </script>   
     <%
-            }
-        }else if(fromLoginNotGuest != null){
-            if(fromLoginNotGuest.equals("yes")){
-    %>
-        <script type="text/javascript">
-            alert("Please Logout first!");
-        </script>   
-    <%
-            }
-        }else if(fromNotAdmin != null){
-            if(fromNotAdmin.equals("yes")){
-    %>
-        <script type="text/javascript">
-            alert("You are not registered as an administrator!");
-        </script>   
-    <%
-            }
-        }else if(InvalidProduct != null){
-            if(InvalidProduct.equals("yes")){
-    %>
-        <script type="text/javascript">
-            alert("Invalid Product!");
-        </script>   
-    <%
-            }
         }
     %>
 
@@ -196,7 +170,6 @@
             <%
                 }
             
-        
             if(users("guest")){
         %>
             <h3 class="center">Login to see more products</h3>
@@ -207,10 +180,7 @@
     </div>
 
     <%
-        session.setAttribute("fromCartAdmin", null);
-        session.setAttribute("fromLoginNotGuest", null);
-        session.setAttribute("fromNotAdmin", null);
-        session.setAttribute("InvalidProduct", null);
+        session.setAttribute("alertMessage", null);
     %>
 
     <div class="footer" id="footer">

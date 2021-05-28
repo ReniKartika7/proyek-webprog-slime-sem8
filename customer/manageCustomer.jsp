@@ -4,13 +4,11 @@
 
 <%
     if(!users("admin")){
-        session.setAttribute("fromNotAdmin", "yes");
+        session.setAttribute("alertMessage", "You are not registered as an Admin !");
         response.sendRedirect(root);
         return;
     }
-    
-    String deleteDone = (String) session.getAttribute("deleteDone");
-    String invalidUser = (String) session.getAttribute("invalidUser");
+    String alertMessage = (String) session.getAttribute("alertMessage");
 %>
 
 <!DOCTYPE html>
@@ -28,25 +26,18 @@
     
 </head>
 <body>
+    <input type="hidden" name="alertMessage" id="alertMessage" value="<%= alertMessage %>">
     <%
-        if(deleteDone != null){
-            if(deleteDone.equals("yes")){
+        if(alertMessage != null){
     %>
         <script type="text/javascript">
-            alert("Account has been deleted!");
+            var txt = document.getElementById("alertMessage").value;
+            alert(txt);
         </script>   
     <%
-            }
-        }else if(invalidUser != null){
-            if(invalidUser.equals("yes")){
-    %>
-        <script type="text/javascript">
-            alert("Invalid User ID!");
-        </script>   
-    <%
-            }
         }
     %>
+
     <div class="header" id="header">
         <%@ include file="/headerfooter/header.jsp" %>
     </div>
@@ -165,10 +156,9 @@
             </div>
         </div>
     </div>
-
+    
     <%
-        session.setAttribute("deleteDone", null);
-        session.setAttribute("invalidUser", null);
+        session.setAttribute("alertMessage", null);
     %>
 
     <div class="footer" id="footer">

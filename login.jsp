@@ -4,13 +4,11 @@
 
 <%
     if(!users("guest")){
-        session.setAttribute("fromLoginNotGuest", "yes");
+        session.setAttribute("alertMessage", "Please Logout first!");
         response.sendRedirect(root);
         return;
     }
-    String fromRegister = (String) session.getAttribute("fromRegister");
-    String fromCartGuest = (String) session.getAttribute("fromCartGuest");
-    String fromLogOut = (String) session.getAttribute("fromLogOut");
+    String alertMessage = (String) session.getAttribute("alertMessage");
 %>
 
 <!DOCTYPE html>
@@ -28,35 +26,18 @@
     
 </head>
 <body>
-    
+    <input type="hidden" name="alertMessage" id="alertMessage" value="<%= alertMessage %>">
     <%
-        if(fromRegister != null){
-            if(fromRegister.equals("yes")){
+        if(alertMessage != null){
     %>
         <script type="text/javascript">
-            alert("Thanks for your registration ! Please Login here!");
-        </script>
-    <%
-            }
-        }else if(fromCartGuest != null){
-            if(fromCartGuest.equals("yes")){
-    %>
-        <script type="text/javascript">
-            alert("Please Login first!");
+            var txt = document.getElementById("alertMessage").value;
+            alert(txt);
         </script>   
     <%
-            }
-        }else if(fromLogOut != null){
-            if(fromLogOut.equals("yes")){
-    %>
-        <script type="text/javascript">
-            alert("You've successfully logged out!");
-        </script>   
-    <%
-            }
         }
     %>
-
+    
     <div class="header" id="header">
         <%@ include file="/headerfooter/header.jsp" %>
     </div>
@@ -105,9 +86,7 @@
     </div>
 
     <%
-        session.setAttribute("fromRegister", null); 
-        session.setAttribute("fromCartGuest", null);
-        session.setAttribute("fromLogOut", null);
+        session.setAttribute("alertMessage", null); 
         session.setAttribute("errorEmail", null);
         session.setAttribute("errorPassword", null);
     %>

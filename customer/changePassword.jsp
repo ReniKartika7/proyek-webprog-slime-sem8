@@ -4,11 +4,11 @@
 
 <%
     if(users("guest")){
-        session.setAttribute("fromCartGuest", "yes");
+        session.setAttribute("alertMessage", "Please Login first!");
         response.sendRedirect(loginPath);
         return;
     }else if(users("admin")){
-        session.setAttribute("fromCartAdmin", "yes");
+        session.setAttribute("alertMessage", "You are not login as a customer");
         response.sendRedirect(root);
         return;
     }

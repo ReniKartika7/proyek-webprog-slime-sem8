@@ -9,8 +9,8 @@
         response.addCookie(cookie);
 
         session.removeAttribute("user_id");
-        session.setAttribute("fromLogOut", "yes");
+        session.setAttribute("alertMessage", "You've successfully logged out!");
 
-        response.sendRedirect(root + "/login.jsp");
+        response.sendRedirect(loginPath);
     }
 %>
