@@ -45,23 +45,24 @@
     </div>
     
     <div class="container manage">
-        <h1>Manage User</h1>
+        <h1>Manage Product</h1>
         <div class="row">
             <table>
                 <thead>
                     <tr>
                         <th class="center" scope="col">ID</th>
-                        <th scope="col">Email</th>
                         <th scope="col">Name</th>
-                        <th scope="col">Phone</th>
-                        <th scope="col">Gender</th>
-                        <th scope="col">Role</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Stock</th>
+                        <th scope="col">Cover Url</th>
+                        <th scope="col">Category</th>
+                        <th scope="col">Description</th>
                         <th scope="col"></th>
                     </tr>
                 </thead>
                 <tbody>
                     <%
-                        int limit = 10;
+                        int limit = 7;
                         String searchKeyword = request.getParameter("search");
                         String pageParam = request.getParameter("page");
     
@@ -76,23 +77,24 @@
                         String where = "";
                         String like = "%" + (searchKeyword == null ? "" : searchKeyword) + "%";
 
-                        where = "WHERE user_name LIKE ?";
+                        where = "WHERE snack_name LIKE ?";
      
-                        String query = String.format("SELECT * FROM users %s ORDER BY user_id ASC LIMIT %d, %d", where, offset, limit);
+                        String query = String.format("SELECT * FROM snacks JOIN snack_category ON snacks.snack_category_id = snack_category.snack_category_id %s ORDER BY snack_id ASC LIMIT %d, %d", where, offset, limit);
 
                         ResultSet rs = Connect.query(query, like);
                         while(rs.next()){
                     %>
                             <tr>
-                                <th scope="row"><%= rs.getInt("user_id") %></th>
-                                <td><%= rs.getString("user_email") %></td>
-                                <td><%= rs.getString("user_name") %></td>
-                                <td><%= rs.getString("user_phone") %></td>
-                                <td><%= rs.getString("user_gender") %></td>
-                                <td><%= rs.getBoolean("is_admin") ? "admin" : "customer" %></td>
+                                <th scope="row"><%= rs.getInt("snack_id") %></th>
+                                <td><%= rs.getString("snack_name") %></td>
+                                <td><%= rs.getInt("snack_price") %></td>
+                                <td><%= rs.getInt("snack_stock") %></td>
+                                <td><%= rs.getString("snack_category_name") %></td>
+                                <td><%= rs.getString("snack_cover_url") %></td>
+                                <td><%= rs.getString("snack_detail") %></td>
                                 <td>
                                     <div>
-                                        <a href="editProfileAdmin.jsp?id=<%= rs.getInt("user_id") %>">
+                                        <a href="editProduct.jsp?id=<%= rs.getInt("snack_id") %>">
                                             <i class="fas fa-edit"></i>
                                         </a>
                                     </div>
@@ -115,7 +117,7 @@
                         }
                         uri += "page=";
 
-                        rs = Connect.query("SELECT COUNT(*) FROM users " + where, like);
+                        rs = Connect.query("SELECT COUNT(*) FROM snacks JOIN snack_category ON snacks.snack_category_id = snack_category.snack_category_id " + where, like);
                         rs.first();
 
                         int lastPage = (rs.getInt(1) - 1) / limit + 1;
@@ -156,6 +158,13 @@
                     %>
                 </ul>
             </div>
+        </div>
+        <div class="row">
+            <form action="insertProduct.jsp">
+                <div class="form-item form-button">
+                    <button type="submit">Insert New Product</button>
+                </div>
+            </form>
         </div>
     </div>
     

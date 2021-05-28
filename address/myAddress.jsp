@@ -49,63 +49,52 @@
     
     <div class="container manage">
         <h1>My Address</h1>
-        <div class="row">
-            <table>
-                <thead>
-                    <tr>
-                        <th class="center" scope="col">ID</th>
-                        <th scope="col">Address</th>
-                        <th scope="col">Full Name</th>
-                        <th scope="col">Phone Number</th>
-                        <th scope="col">Province</th>
-                        <th scope="col">District</th>
-                        <th scope="col">Sub District</th>
-                        <th scope="col">Postal Code</th>
-                        <th scope="col"></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <%
-                        int limit = 5;
-                        String pageParam = request.getParameter("page");
-    
-                        int pageNumber = 1;
-                        try{
-                            pageNumber = Integer.parseInt(pageParam);
-                        } catch (NumberFormatException e){
-    
-                        }
-    
-                        int offset = (pageNumber - 1) * limit;
-     
-                        String query = String.format("SELECT * FROM address JOIN users ON address.user_id = users.user_id WHERE users.user_id = ? ORDER BY address_id ASC LIMIT %d, %d", offset, limit);
+        <br>
 
-                        ResultSet rs = Connect.query(query, user.sId());
-                        while(rs.next()){
-                    %>
-                            <tr>
-                                <th scope="row"><%= rs.getInt("address_id") %></th>
-                                <td><%= rs.getString("address_detail") %></td>
-                                <td><%= rs.getString("address_full_name") %></td>
-                                <td><%= rs.getString("address_phone_number") %></td>
-                                <td><%= rs.getString("address_province") %></td>
-                                <td><%= rs.getString("address_district") %></td>
-                                <td><%= rs.getString("address_subdistrict") %></td>
-                                <td><%= rs.getString("address_postal_code") %></td>
-                                <td>
-                                    <div>
-                                        <a href="editAddress.jsp?id=<%= rs.getInt("address_id") %>">
-                                            <i class="fas fa-edit"></i>
-                                        </a>
-                                    </div>
-                                </td>
-                            </tr>
+        <%
+            int limit = 5;
+            String pageParam = request.getParameter("page");
+
+            int pageNumber = 1;
+            try{
+                pageNumber = Integer.parseInt(pageParam);
+            } catch (NumberFormatException e){
+
+            }
+
+            int offset = (pageNumber - 1) * limit;
+
+            String query = String.format("SELECT * FROM address JOIN users ON address.user_id = users.user_id WHERE users.user_id = ? ORDER BY address_id ASC LIMIT %d, %d", offset, limit);
+
+            ResultSet rs = Connect.query(query, user.sId());
+            while(rs.next()){
+        %>
+            <a class="card-view" href="editAddress.jsp?id=<%= rs.getInt("address_id") %></a>">
+                <div class="row">
+                    <div>
+                        <b><%= rs.getString("address_full_name") %></b>
+                    </div>
+                    <div>
+                        <%= rs.getString("address_phone_number") %>
+                    </div>
+                    <div>
+                        <%= rs.getString("address_detail") %>
+                    </div>
                     <%
-                        }
+                        String txt = rs.getString("address_province") + ", " + rs.getString("address_district") + ", " + rs.getString("address_subdistrict") + ", " + rs.getString("address_postal_code");
+                        txt = txt.toUpperCase();
                     %>
-                </tbody>
-            </table>
-        </div>
+                    <div>
+                        <%= txt %>
+                    </div>
+                    <div class="icon-right">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                </div>
+            </a>
+        <%
+            }
+        %>
 
         <div class="row">
             <div class="navbar">

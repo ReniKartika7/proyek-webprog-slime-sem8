@@ -14,7 +14,7 @@
     String id = request.getParameter("id");
     if(id == null || id.isEmpty()){
         session.setAttribute("alertMessage", "Invalid Address!");
-        response.sendRedirect("editAddress.jsp");
+        response.sendRedirect("myAddress.jsp");
         return;
     }
 

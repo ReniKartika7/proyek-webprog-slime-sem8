@@ -100,7 +100,7 @@
             String query ="UPDATE users SET user_email = ?, user_name = ?, user_phone = ?, user_gender = ?, is_admin = ? WHERE user_id = ?";
             Connect.update(query, email, name, phoneNumber, gender, role.equals("admin") ? "1" : "0", id);
     
-            session.setAttribute("alertMessage", "Product has been updated!");
+            session.setAttribute("alertMessage", "Account has been updated!");
             response.sendRedirect("manageCustomer.jsp");
         }else{
             response.sendRedirect("editProfile.jsp?id=" + id);

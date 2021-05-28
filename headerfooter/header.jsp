@@ -42,7 +42,7 @@
         </ul>
     </div>
     <div class="header-item icon">
-        <% if(currentPath.equals(productPath) || currentPath.equals(manageUserPath)) {%>
+        <% if(currentPath.equals(productPath) || currentPath.equals(manageUserPath) || currentPath.equals(manageProductPath)) {%>
             <span class="icons" onclick="openSearchBar()">
                 <i class="fas fa-search"></i>
             </span>
@@ -79,7 +79,7 @@
                 </a>
                 <div class="dropdown-content" id="dropdown-content">
                     <a href="<%= manageUserPath %>">Manage Users</a>
-                    <a href="#">Manage Products</a>
+                    <a href="<%= manageProductPath %>">Manage Products</a>
                     <a href="<%= root %>/doLogout.jsp">Log Out</a>
                 </div>
             </div>

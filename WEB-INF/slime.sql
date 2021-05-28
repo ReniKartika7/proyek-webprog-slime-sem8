@@ -79,7 +79,7 @@ CREATE TABLE IF NOT EXISTS snacks (
 
 -- Dummy data untuk Snack
 INSERT INTO snacks (snack_name, snack_price, snack_stock, snack_cover_url, snack_category_id, snack_detail)
-VALUES ('Myojo Mapo Men: Mapo Tofu Cup Ramen (1 Cup)', 35000, 50, 'https://drive.google.com/uc?export=view&id=1Z_rmIj_qy_vY76IfU-fCTpbYQ54jV-iY', 2, "Mapo tofu is one of the most popular Chinese dishes in Japan, and a popular inspiration for all sorts of delicious fusion foods. This cup ramen's savory broth has scallions, ground pork, and tofu, which re-hydrate and marinate in the spicy broth that clings to the noodles.");
+VALUES ('Myojo Mapo Men: Mapo Tofu Cup Ramen (1 Cup)', 35000, 50, 'https://drive.google.com/uc?export=view&id=1Z_rmIj_qy_vY76IfU-fCTpbYQ54jV-iY', 1, "Mapo tofu is one of the most popular Chinese dishes in Japan, and a popular inspiration for all sorts of delicious fusion foods. This cup ramen's savory broth has scallions, ground pork, and tofu, which re-hydrate and marinate in the spicy broth that clings to the noodles.");
 
 
 -- Create table Cart

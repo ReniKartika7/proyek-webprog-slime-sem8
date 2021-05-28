@@ -26,6 +26,8 @@
         response.sendRedirect(location);
         return;
     }
+
+    String alertMessage = (String) session.getAttribute("alertMessage");
 %>
 
 <!DOCTYPE html>
@@ -47,6 +49,18 @@
         <%@ include file="/headerfooter/header.jsp" %>
     </div>
     
+    <input type="hidden" name="alertMessage" id="alertMessage" value="<%= alertMessage %>">
+    <%
+        if(alertMessage != null){
+    %>
+        <script type="text/javascript">
+            var txt = document.getElementById("alertMessage").value;
+            alert(txt);
+        </script>   
+    <%
+        }
+    %>
+
     <div class="container single-product">
         <div class="product-detail">
             <div class="row">
@@ -71,39 +85,69 @@
                         <i class="fas fa-shipping-fast"></i> Free shipping on orders over Rp120.000
                     </div>
                     <input type="hidden" name="stock" id="stock" value="<%= rsp.getInt("snack_stock") %>">
-                    <div class="product-quantity">
-                        <span>Quantity :</span>
-                        <div class="quantity-button">
-                            <input type="button" value="-" class="button-minus"><input type="number" class="input-qty" size="4" step="1" min="1" max="<%= rsp.getInt("snack_stock") %>" name="product-qty" id="qty" value="1"><input type="button" value="+" class="button-plus">
+                    <form method="POST">
+                        <div class="product-quantity">
+                            <span>Quantity :</span>
+                            <div class="quantity-button">
+                                <input type="button" value="-" class="button-minus"><input type="number" name="qty" class="input-qty" size="4" step="1" min="0" max="<%= rsp.getInt("snack_stock") %>" id="qty" value="0"><input type="button" value="+" class="button-plus">
+                            </div>
+                            <span class="product-stock" style="margin-left: 1rem; color: grey;"><%= rsp.getInt("snack_stock") %> pieces available</span>
                         </div>
-                        <span class="product-stock" style="margin-left: 1rem; color: grey;"><%= rsp.getInt("snack_stock") %> pieces available</span>
-                    </div>
 
-                    <div class="product-button">
-                        <button onclick="goToCart()" class="button-cart">
-                            <i class="fas fa-shopping-cart"></i> ADD TO CART
-                        </button>
-                        <button onclick="goToBuy()" class="button-buy">
-                            BUY NOW
-                        </button>
-                        <input type="hidden" name="doCartLocation" id="doCartLocation" value="<%= root %>/cart/doCart.jsp">
-                    </div>
+                        <%
+                            if(users("customer")){
+                                if(rsp.getInt("snack_stock") > 0 ){
+                        %>
+                                <div class="product-button">
+                                    <button type="submit" class="button-cart" formaction="<%= root + "/cart/doCart.jsp?id=" + id %>">
+                                        <i class="fas fa-shopping-cart"></i> ADD TO CART
+                                    </button>
+                                    <button type="submit" class="button-buy"formaction="<%= root + "/cart/doBuy.jsp?id=" + id %>">
+                                        BUY NOW
+                                    </button>
+                                </div>
+                        <%
+                                }else{
+                        %>
+                                <div class="product-button">
+                                    <button class="button-cart">
+                                        <i class="fas fa-shopping-cart"></i> EMPTY STOCK
+                                    </button>
+                                    <button class="button-buy">
+                                        EMPTY STOCK
+                                    </button>
+                                </div>  
+                        <%
+                                }
+                            }else if(users("admin")){
+                        %>
+                        <div class="product-button">
+                            <button class="button-cart">
+                                <i class="fas fa-shopping-cart"></i> LOGIN AS CUTOMER
+                            </button>
+                            <button class="button-buy">
+                                LOGIN AS CUSTOMER TO BUY
+                            </button>
+                        </div>
+                        <%
+                            }
+                        %>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
 
+    <%
+        session.setAttribute("alertMessage", null);
+    %>
+    
     <div class="footer" id="footer">
         <%@ include file="/headerfooter/footer.jsp" %>
     </div>
 
     
     <script>
-        var doCartLocation = document.getElementById("doCartLocation").value;
-        function goToCart(){
-            location.replace(doCartLocation);
-        }
-
         var qty = document.getElementById("qty");
         var stock = parseInt(document.getElementById("stock").value);
         qty.addEventListener("input", checkValue);

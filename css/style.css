@@ -52,9 +52,16 @@ html, body{
     flex: 4;
 }
 
+.col5{
+    display: flex;
+    flex-direction: column;
+    flex-basis: 100%;
+    flex: 5;
+}
+
 
 @media screen and (max-width: 700px){
-    .col4, .col2, .col{
+    .col5, .col4, .col2, .col{
         display: flex;
         flex-direction: column;
         flex-basis: 100%;
@@ -722,7 +729,7 @@ a{
     margin-top: 1rem;
 }
 
-.form-item input{
+.form-item input, .form-item textarea, .form-item select{
     width: 100%;
     border-style: none;
     border-radius: 10px;
@@ -730,13 +737,17 @@ a{
     padding: 0.7rem 1rem;
 }
 
-.form-item input:focus{
+.form-item input:focus, .form-item textarea:focus{
     outline: none;
     background-color: var(--light-yellow);
 }
 
-.form-item input::placeholder{
+.form-item input::placeholder, .form-item textarea::placeholder{
     font-family: Montserrat;
+}
+
+textarea{
+    resize: none;
 }
 
 .form-button button{
@@ -937,6 +948,31 @@ table tbody tr:nth-of-type(even){
     margin: 2rem 0;
     justify-content: center;
 }
+
+.card-view{
+    width: 70%;
+    margin: 1rem auto;
+    display: block;
+    background-color: var(--light-yellow);
+    border-radius: 10px;
+}
+
+.card-view .row{
+    display: block;
+    padding: 2rem;
+}
+
+.icon-right{
+    float: right;
+}
+
+/* Cart */
+.cart-container{
+    width: 70%;
+    margin: auto;
+    padding: 2rem;
+}
+
 
 /* Footer */
 #footer{
