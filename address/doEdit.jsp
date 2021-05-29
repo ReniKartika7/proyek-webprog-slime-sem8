@@ -11,10 +11,15 @@
         return;
     }
 
+    String loc = (String) session.getAttribute("loc");
+    if(loc == null || loc.isEmpty()){
+        loc = "myAddress";
+    }
+
     String id = request.getParameter("id");
     if(id == null || id.isEmpty()){
         session.setAttribute("alertMessage", "Invalid Address!");
-        response.sendRedirect("myAddress.jsp");
+        response.sendRedirect(loc + ".jsp");
         return;
     }
 
@@ -23,7 +28,7 @@
     ResultSet rs = Connect.query(query, user.sId(), id);
     if(!rs.first()){
         session.setAttribute("alertMessage", "Invalid Address!");
-        response.sendRedirect("myAddress.jsp");
+        response.sendRedirect(loc + ".jsp");
         return;
     }
 
@@ -110,8 +115,8 @@
 
         Connect.update(query,user.sId(), address, name, phoneNumber, province, district, subDistrict, postalCode, id);
 
-        session.setAttribute("alertMessage", "Product has been updated!");
-        response.sendRedirect("myAddress.jsp");
+        session.setAttribute("alertMessage", "Address has been updated!");
+        response.sendRedirect(loc + ".jsp");
     }else{
         response.sendRedirect("editAddress.jsp?id=" + id);
     }

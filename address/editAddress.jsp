@@ -4,6 +4,12 @@
 
 <%
     String id = request.getParameter("id");
+    String loc = (String) session.getAttribute("loc");
+    if(loc == null || loc.isEmpty()){
+        loc = "myAddress";
+    }
+    session.setAttribute("loc", loc);
+
     if(users("admin")){
         session.setAttribute("alertMessage", "You are not login as a customer");
         response.sendRedirect(root);
@@ -14,7 +20,7 @@
         return;
     }else if(id == null || id.isEmpty()){
         session.setAttribute("alertMessage", "Invalid Address!");
-        response.sendRedirect("myAddress.jsp");
+        response.sendRedirect(loc + ".jsp");
         return;
     }
     String query = "SELECT * FROM address JOIN users ON address.user_id = users.user_id WHERE users.user_id = ? AND address_id = ?";
@@ -22,7 +28,7 @@
     ResultSet rs = Connect.query(query, user.sId(), id);
     if(!rs.first()){
         session.setAttribute("alertMessage", "Invalid Address!");
-        response.sendRedirect("myAddress.jsp");
+        response.sendRedirect(loc + ".jsp");
         return;
     }
 %>

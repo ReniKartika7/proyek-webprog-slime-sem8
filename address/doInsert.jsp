@@ -11,6 +11,11 @@
         return;
     }
 
+    String loc = (String) session.getAttribute("loc");
+    if(loc == null || loc.isEmpty()){
+        loc = "myAddress";
+    }
+
     String address = request.getParameter("address");
     String name = request.getParameter("name");
     String phoneNumber = request.getParameter("phoneNumber");
@@ -110,7 +115,7 @@
         session.setAttribute("postalCode", null);
 
         session.setAttribute("alertMessage", "New address has been inserted!");
-        response.sendRedirect("myAddress.jsp");
+        response.sendRedirect(loc + ".jsp");
     }else{
         response.sendRedirect("insertAddress.jsp");
     }

@@ -21,7 +21,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Address - Slime</title>
+    <title>Choose Address - Slime</title>
     <link rel="shortcut icon" type="image/png" href="<%= root %>/asset/slime_logo.png">
     <!-- CSS -->
     <link rel="stylesheet" href="<%= root %>/css/style.css">
@@ -51,8 +51,10 @@
         <h1>My Address</h1>
         <br>
 
+        <form method="POST">
+
         <%
-            session.setAttribute("loc", "myAddress");
+            session.setAttribute("loc", "chooseAddress");
             int limit = 5;
             String pageParam = request.getParameter("page");
 
@@ -70,7 +72,12 @@
             ResultSet rs = Connect.query(query, user.sId());
             while(rs.next()){
         %>
-            <a class="card-view" href="editAddress.jsp?id=<%= rs.getInt("address_id") %></a>">
+            <div class="choose-address">
+                <input type="radio" name="choosenAddress" id="<%= rs.getInt("address_id") %>" value="<%= rs.getInt("address_id") %>">
+                <label for="choosenAddress"> Choose this address </label>
+            </div>
+            
+            <a class="card-view choose-address" href="editAddress.jsp?id=<%= rs.getInt("address_id") %></a>">
                 <div class="row">
                     <div>
                         <b><%= rs.getString("address_full_name") %></b>
@@ -146,13 +153,18 @@
                 </ul>
             </div>
         </div>
-        <div class="row">
-            <form action="insertAddress.jsp" method="POST">
-                <div class="form-item form-button">
-                    <button type="submit">Insert New Address</button>
-                </div>
-            </form>
+        <div class="row choose-btn">
+            <div class="product-button">
+                    <button class="button-cart" type="submit" formaction="<%= root + "/address/doChoose.jsp" %>">Choose Address</button>
+            </div>
         </div>
+        <div class="row choose-btn">
+            <div class="product-button">
+                <button class="button-buy" type="submit" formaction="insertAddress.jsp">Insert New Address</button>
+            </div>
+        </div>
+        
+        </forms>
     </div>
 
     <%

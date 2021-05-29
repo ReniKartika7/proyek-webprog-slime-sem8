@@ -13,6 +13,12 @@
         return;
     }
 
+    String loc = (String) session.getAttribute("loc");
+    if(loc == null || loc.isEmpty()){
+        loc = "myAddress";
+    }
+    session.setAttribute("loc", loc);
+
     String address = (String) session.getAttribute("address");
     String name = (String) session.getAttribute("name");
     String phoneNumber = (String) session.getAttribute("phoneNumber");
@@ -32,7 +38,7 @@
     <!-- CSS -->
     <link rel="stylesheet" href="<%= root %>/css/style.css">
     <!-- JS -->
-    <script src="https://kit.fontawesome.com/ee59162344.js" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesoFe.com/ee59162344.js" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     
 </head>
