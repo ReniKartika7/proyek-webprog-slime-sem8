@@ -28,7 +28,8 @@
     <!-- JS -->
     <script src="https://kit.fontawesome.com/ee59162344.js" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    
+    <script src="<%= root %>/js/quantity.js"></script>
+>
 </head>
 <body>
     <div class="header" id="header">
@@ -45,16 +46,20 @@
 
                 ResultSet rs = Connect.query(query, user.sId());
                 if(rs.first()){
+                    Integer cnt = rs.getInt("cnt");
+                    if(cnt == 0){
+                        out.println("You don't have any product in your cart.");
+                    }else{
             %>
 
                     <%= rs.getInt("cnt") %> PRODUCT(S) CHOOSEN <br>
 
             <%
-                    query = "SELECT * FROM cart JOIN snacks ON cart.snack_id = snacks.snack_id WHERE user_id = ? ORDER BY cart_id ASC";
+                        query = "SELECT * FROM cart JOIN snacks ON cart.snack_id = snacks.snack_id WHERE user_id = ? ORDER BY cart_id ASC";
 
-                    rs = Connect.query(query, user.sId());
+                        rs = Connect.query(query, user.sId());
             
-                    while(rs.next()){
+                        while(rs.next()){
             %>
                         <div class="row">
                             <div class="col image">
@@ -69,17 +74,19 @@
                                 </div>
                                 <div class="product-quantity">
                                     <div class="quantity-button">
-                                        <input type="button" value="-" class="button-minus"><input type="number" name="qty" class="input-qty" size="4" step="1" min="0" max="<%= rs.getInt("snack_stock") %>" id="qty" value="<%= rs.getInt("quantity") %>"><input type="button" value="+" class="button-plus">
+                                        <input type="hidden" name="snack-id" class="snack-id" value="<%= rs.getInt("snack_id") %>">
+                                        <input type="hidden" name="snack-price" class="snack-price" value="<%= rs.getInt("snack_price") %>">
+                                        <input type="button" value="-" class="button-minus"><input type="number" name="qty" class="input-qty" size="4" step="1" min="1" max="<%= rs.getInt("snack_stock") %>" id="qty" value="<%= rs.getInt("quantity") %>"><input type="button" value="+" class="button-plus">
                                     </div>
                                 </div>
                             </div>
-                            <div class="col total">
-                                <%= formatRupiah(rs.getInt("snack_price") * rs.getInt("quantity")) %>
+                            <div class="col totaldiv">
+                                <span class="total"><%= formatRupiah(rs.getInt("snack_price") * rs.getInt("quantity")) %></span>
                             </div>
                         </div>
             <%
-                        subTotal = subTotal + (rs.getInt("snack_price") * rs.getInt("quantity"));
-                    }
+                            subTotal = subTotal + (rs.getInt("snack_price") * rs.getInt("quantity"));
+                        }
             %>  
             <div class="row total-container">
                 <div class="col temp">
@@ -88,7 +95,7 @@
                     <b>Sub Total</b>
                 </div>
                 <div class="col total-price">
-                    <b><%= formatRupiah(subTotal)%></b>
+                    <span class="total-price-value"><b><%= formatRupiah(subTotal)%></b></span>
                 </div>
             </div>
                    
@@ -98,12 +105,10 @@
                 </div>
             </form>
             <%
-                }else{
-            %>
-                    You don't have any product in your cart.
-            <%
+                    }
                 }
             %>
+                
             
         </div>
     </div>

@@ -17,7 +17,23 @@
     String addressId = (String) session.getAttribute("addressId");
     session.setAttribute("addressId", addressId);
     String loc1 = (String) session.getAttribute("loc1");
+
+    if(loc1 == null || loc1.isEmpty()){
+        session.setAttribute("alertMessage", "Please Try Again!");
+        response.sendRedirect(root);
+        return;
+    }
+
     session.setAttribute("loc1", loc1);
+    String id = request.getParameter("id");
+    if(loc1.equals("buyProduct") && (id == null || id.isEmpty())){
+        session.setAttribute("alertMessage", "Invalid Product ID!");
+        response.sendRedirect(root + "/products/product.jsp?id=" + id);
+        return;
+    }
+
+    Integer qty = (Integer) session.getAttribute("qty");
+    session.setAttribute("qty", qty);
 %>
 
 <!DOCTYPE html>
@@ -49,19 +65,16 @@
         </script>   
     <%
         }
-    %>
 
-    <% 
         Integer subTotal = 0; 
         String query;
         ResultSet rs;
     %>
-    
     <div class="container">
-        <h1 class="center">MY CART</h1>
+        <h1 class="center">CHECK OUT</h1>
+        
         <div class="cart-container">
-
-            <a href="<%= root + "/address/chooseAddress.jsp" %>">
+            <a href="<%= root + "/address/chooseAddress.jsp?id=" + id %>">
                 <div class="row shipping-address">
                     <div>
                         <b>Shipping Address</b>
@@ -108,22 +121,51 @@
                     </div>
                 </div>
             </a>
-
             <%
-                query = "SELECT COUNT(*) AS cnt FROM cart JOIN snacks ON cart.snack_id = snacks.snack_id WHERE user_id = ?";
-
-                rs = Connect.query(query, user.sId());
-                if(rs.first()){
-            %>
-
-                    <%= rs.getInt("cnt") %> PRODUCT(S) CHOOSEN <br>
-
-            <%
-                    query = "SELECT * FROM cart JOIN snacks ON cart.snack_id = snacks.snack_id WHERE user_id = ? ORDER BY cart_id ASC";
-
+                if(loc1.equals("myCart")){
+                    query = "SELECT COUNT(*) AS cnt FROM cart JOIN snacks ON cart.snack_id = snacks.snack_id WHERE user_id = ?";
+                    
                     rs = Connect.query(query, user.sId());
-            
-                    while(rs.next()){
+                    if(rs.first()){
+                        out.println(rs.getInt("cnt") + " PRODUCT(S) CHOOSEN <br>");
+
+                        query = "SELECT * FROM cart JOIN snacks ON cart.snack_id = snacks.snack_id WHERE user_id = ? ORDER BY cart_id ASC";
+
+                        rs = Connect.query(query, user.sId());
+                        while(rs.next()){
+            %>
+                                        <div class="row">
+                                            <div class="col image">
+                                                <img src="<%= rs.getString("snack_cover_url") %>" alt="<%= rs.getString("snack_name") %>">
+                                            </div>
+                                            <div class="col3">
+                                                <div>
+                                                    <b><%= rs.getString("snack_name") %></b>
+                                                </div>
+                                                <div>
+                                                    <%= formatRupiah(rs.getInt("snack_price")) %>
+                                                </div>
+                                                <div>
+                                                    <b><%= rs.getInt("quantity") %> Pcs</b>
+                                                </div>
+                                            </div>
+                                            <div class="col total">
+                                                <%= formatRupiah(rs.getInt("snack_price") * rs.getInt("quantity")) %>
+                                            </div>
+                                        </div>
+            <%
+                                        subTotal = subTotal + (rs.getInt("snack_price") * rs.getInt("quantity"));
+                                    }
+
+                    }else{
+                        out.println("You don't have any product in your cart.");
+                    }
+                }else if(loc1.equals("buyProduct")){
+                    out.println("1 PRODUCT CHOOSEN <br>");
+
+                    query = "SELECT * FROM snacks WHERE snack_id = ?";
+                    rs = Connect.query(query, id);
+                    if(rs.first()){
             %>
                         <div class="row">
                             <div class="col image">
@@ -137,17 +179,19 @@
                                     <%= formatRupiah(rs.getInt("snack_price")) %>
                                 </div>
                                 <div>
-                                    <b><%= rs.getInt("quantity") %> Pcs</b>
+                                    <b><%= qty %> Pcs</b>
                                 </div>
                             </div>
                             <div class="col total">
-                                <%= formatRupiah(rs.getInt("snack_price") * rs.getInt("quantity")) %>
+                                <%= formatRupiah(rs.getInt("snack_price") * qty) %>
                             </div>
                         </div>
             <%
-                        subTotal = subTotal + (rs.getInt("snack_price") * rs.getInt("quantity"));
+                        subTotal = subTotal + (rs.getInt("snack_price") * qty);
                     }
-            %>  
+                }
+            %>                        
+            
             <div class="row total-container">
                 <div class="col temp">
                 </div>
@@ -180,26 +224,20 @@
                 <div class="col temp">
                 </div>
                 <div class="col3 total-text">
-                    <b>Sub Total</b>
+                    <b>Grand Total</b>
                 </div>
                 <div class="col total-price">
-                    <b><%= formatRupiah(subTotal)%></b>
+                    <b><%= formatRupiah(subTotal + shippingFee)%></b>
                 </div>
             </div>
                    
-            <form action="doBuy.jsp">
+            <form method="POST">
                 <div class="form-item form-button center">
-                    <button type="submit">BUY NOW</button>
+                    <button type="submit" formaction="<%= "doBuy.jsp?id=" + id %>">
+                        BUY NOW
+                    </button>
                 </div>
             </form>
-            <%
-                }else{
-            %>
-                    You don't have any product in your cart.
-            <%
-                }
-            %>
-            
         </div>
     </div>
     

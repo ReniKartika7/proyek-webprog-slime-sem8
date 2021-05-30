@@ -12,10 +12,11 @@
     }
 
     String choosenAddress = (String) request.getParameter("choosenAddress");
+    String id = request.getParameter("id");
     
     if(choosenAddress == null || choosenAddress.isEmpty()){
         session.setAttribute("alertMessage", "You have to choose shipping address!");
-        response.sendRedirect("chooseAddress.jsp");
+        response.sendRedirect("chooseAddress.jsp?id=" + id);
         return;
     }
 
@@ -24,11 +25,11 @@
     ResultSet rs = Connect.query(query, user.sId(), choosenAddress);
     if(!rs.first()){
         session.setAttribute("alertMessage", "Invalid Address!");
-        response.sendRedirect("chooseAddress.jsp");
+        response.sendRedirect("chooseAddress.jsp?id=" + id);
         return;
     }
 
     session.setAttribute("addressId", choosenAddress);
-    response.sendRedirect(root + "/cart/checkOut.jsp");
+    response.sendRedirect(root + "/cart/checkOut.jsp?id=" + id);
     
 %>

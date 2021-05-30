@@ -14,6 +14,7 @@
     }
     
     String alertMessage = (String) session.getAttribute("alertMessage");
+    String id = request.getParameter("id");
 %>
 
 <!DOCTYPE html>
@@ -155,7 +156,7 @@
         </div>
         <div class="row choose-btn">
             <div class="product-button">
-                    <button class="button-cart" type="submit" formaction="<%= root + "/address/doChoose.jsp" %>">Choose Address</button>
+                    <button class="button-cart" type="submit" formaction="<%= root + "/address/doChoose.jsp?id=" + id %>">Choose Address</button>
             </div>
         </div>
         <div class="row choose-btn">

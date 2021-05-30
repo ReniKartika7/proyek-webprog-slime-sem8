@@ -102,7 +102,7 @@
                                     <button type="submit" class="button-cart" formaction="<%= root + "/cart/doCart.jsp?id=" + id %>">
                                         <i class="fas fa-shopping-cart"></i> ADD TO CART
                                     </button>
-                                    <button type="submit" class="button-buy"formaction="<%= root + "/cart/doBuy.jsp?id=" + id %>">
+                                    <button type="submit" class="button-buy" formaction="<%= root + "/cart/doBuyCheck.jsp?id=" + id %>">
                                         BUY NOW
                                     </button>
                                 </div>

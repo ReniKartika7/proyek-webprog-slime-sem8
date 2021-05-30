@@ -24,25 +24,9 @@
         response.sendRedirect(root + "/products/product.jsp?id=" + id);
         return;
     }
-
-    String query = "SELECT * FROM cart JOIN snacks ON cart.snack_id = snacks.snack_id WHERE user_id = ? AND cart.snack_id = ?";
-
-    ResultSet rs = Connect.query(query, user.sId(), id);
     
-    if(rs.first()){
-        qty = qty + rs.getInt("quantity");
+    session.setAttribute("qty", qty);
+    session.setAttribute("loc1", "buyProduct");
 
-        if(qty > rs.getInt("snack_stock")){
-            qty = rs.getInt("snack_stock");
-        }
-
-        query = "UPDATE cart SET quantity = ? WHERE cart_id = ?";
-        Connect.update(query, Integer.toString(qty), Integer.toString(rs.getInt("cart_id")));
-    }else{
-        query ="INSERT INTO cart (user_id, snack_id, quantity) VALUES (?, ?, ?)";
-        Connect.update(query, user.sId(), id, Integer.toString(qty));
-    }
-    
-    session.setAttribute("alertMessage", "Successfully added to cart!");
-    response.sendRedirect(root + "/products/product.jsp?id=" + id);
+    response.sendRedirect("checkOut.jsp?id=" + id);
 %>

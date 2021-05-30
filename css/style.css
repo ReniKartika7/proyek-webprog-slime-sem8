@@ -1022,12 +1022,13 @@ table tbody tr:nth-of-type(even){
     margin-bottom: 0;
 }
 
-.cart-container .col.total, .cart-container .col.total-price{
+.cart-container .col.totaldiv, .cart-container .col.total-price{
     display: flex;
     align-items: flex-end;
     justify-content: flex-end;
     padding-bottom: 1rem;
     font-weight: bold;
+    text-align: right;
 }
 
 .shipping-address{
