@@ -492,7 +492,7 @@ a{
     .container .product-row .col{
         max-width: 200px;
         width: 200px;
-        margin: 0 0.9rem;
+        margin: 0.5rem 0.9rem;
     }
 }
 
@@ -608,7 +608,7 @@ a{
 .product-quantity span{
     display: flex;
     align-items: center;
-    height: 100%;
+    min-height: 100%;
 }
 
 .input-qty{
@@ -689,6 +689,13 @@ a{
 
 .product-button button.button-buy:hover{
     color: var(--main-color);
+}
+
+.disabled{
+    pointer-events: none;
+    cursor: not-allowed;
+    opacity: 0.65;
+    filter: alpha(opacity=65);
 }
 
 @media screen and (max-width: 700px) {
@@ -858,6 +865,32 @@ input[type="radio"]:checked{
     margin: 5rem 0;
 }
 
+.transaction-detail{
+    width: 100%;
+}
+
+.transaction-detail .row{
+    justify-content: center;
+}
+
+.transaction-container .row .navbar{
+    width: 100%;
+}
+
+.transaction-container .row .navbar .navbar-content{
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+    font-size: 1.3rem;
+}
+
+.product-row .product-item .product-item-top img.trans-slime-img{
+    background: none;
+    border: none;
+    width: 120px;
+    height: 120px;
+}
+
 .transaction-container .transaction-empty{
     background-color: var(--lighter-yellow);
     border-radius: 10px;
@@ -892,6 +925,17 @@ input[type="radio"]:checked{
     -moz-box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.5);
     -webkit-box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.5);
     box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.5);
+}
+
+@media screen and (max-width: 1000px){
+    .transaction-container .product-row{
+        margin: 0;
+    }
+
+    .container .transaction-container .transaction-detail .product-row .product-item img{
+        width: 90px;
+        height: 90px;
+    }
 }
 
 @media screen and (max-width: 700px){
@@ -1022,13 +1066,27 @@ table tbody tr:nth-of-type(even){
     margin-bottom: 0;
 }
 
-.cart-container .col.totaldiv, .cart-container .col.total-price{
+.cart-container .col.totaldiv, .cart-container .col.total-price, .cart-container .col.total{
     display: flex;
     align-items: flex-end;
     justify-content: flex-end;
     padding-bottom: 1rem;
     font-weight: bold;
     text-align: right;
+}
+
+.delete-icon{
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+}
+
+.delete-icon a{
+    color: rgb(236, 65, 65);
+}
+
+.delete-icon a:hover{
+    color: rgb(158, 12, 12);
 }
 
 .shipping-address{

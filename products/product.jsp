@@ -35,7 +35,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About Us - Slime</title>
+    <title>Product - Slime</title>
     <link rel="shortcut icon" type="image/png" href="<%= root %>/asset/slime_logo.png">
     <!-- CSS -->
     <link rel="stylesheet" href="<%= root %>/css/style.css">
@@ -110,10 +110,10 @@
                                 }else{
                         %>
                                 <div class="product-button">
-                                    <button class="button-cart">
+                                    <button class="button-cart disabled">
                                         <i class="fas fa-shopping-cart"></i> EMPTY STOCK
                                     </button>
-                                    <button class="button-buy">
+                                    <button class="button-buy disabled">
                                         EMPTY STOCK
                                     </button>
                                 </div>  
@@ -122,10 +122,10 @@
                             }else if(users("admin")){
                         %>
                         <div class="product-button">
-                            <button class="button-cart">
+                            <button class="button-cart disabled">
                                 <i class="fas fa-shopping-cart"></i> LOGIN AS CUTOMER
                             </button>
-                            <button class="button-buy">
+                            <button class="button-buy disabled">
                                 LOGIN AS CUSTOMER TO BUY
                             </button>
                         </div>

@@ -41,7 +41,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CHECK OUT</title>
+    <title>Check Out - Slime</title>
     <link rel="shortcut icon" type="image/png" href="<%= root %>/asset/slime_logo.png">
     <!-- CSS -->
     <link rel="stylesheet" href="<%= root %>/css/style.css">
@@ -127,7 +127,7 @@
                     
                     rs = Connect.query(query, user.sId());
                     if(rs.first()){
-                        out.println(rs.getInt("cnt") + " PRODUCT(S) CHOOSEN <br>");
+                        out.println(rs.getInt("cnt") + " PRODUCT(S) CHOOSEN <br><br>");
 
                         query = "SELECT * FROM cart JOIN snacks ON cart.snack_id = snacks.snack_id WHERE user_id = ? ORDER BY cart_id ASC";
 
@@ -161,7 +161,7 @@
                         out.println("You don't have any product in your cart.");
                     }
                 }else if(loc1.equals("buyProduct")){
-                    out.println("1 PRODUCT CHOOSEN <br>");
+                    out.println("1 PRODUCT CHOOSEN <br><br>");
 
                     query = "SELECT * FROM snacks WHERE snack_id = ?";
                     rs = Connect.query(query, id);
