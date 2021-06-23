@@ -60,62 +60,26 @@
                 <br><br>
                 <form action="doEdit.jsp?id=<%= rs.getInt("user_id") %>" method="POST" class="form">
                     <div class="form-item">
-                        <input type="text" name="email" placeholder="Email" value="<%= rs.getString("user_email") %>">
-                    </div>
-                    <div class="form-error left">
-                        <%
-                            String errorEmail = (String) session.getAttribute("errorEmail");
-            
-                            if(errorEmail != null){
-                                out.println(errorEmail);
-                            }
-                        %>
+                        <input type="text" name="email" placeholder="Email" readonly value="<%= rs.getString("user_email") %>">
                     </div>
                     <div class="form-item">
-                        <input type="text" name="name" placeholder="Name" value="<%= rs.getString("user_name") %>">
-                    </div>
-                    <div class="form-error left">
-                        <%
-                            String errorName = (String) session.getAttribute("errorName");
-            
-                            if(errorName != null){
-                                out.println(errorName);
-                            }
-                        %>
+                        <input type="text" name="name" placeholder="Name" readonly value="<%= rs.getString("user_name") %>">
                     </div>
                     <div class="form-item">
-                        <input type="text" name="phoneNumber" placeholder="Phone Number" value="<%= rs.getString("user_phone") %>">
-                    </div>
-                    <div class="form-error left">
-                        <%
-                            String errorPhoneNumber = (String) session.getAttribute("errorPhoneNumber");
-            
-                            if(errorPhoneNumber != null){
-                                out.println(errorPhoneNumber);
-                            }
-                        %>
+                        <input type="text" name="phoneNumber" placeholder="Phone Number" readonly value="<%= rs.getString("user_phone") %>">
                     </div>
                     <div class="form-radio-item left">
                         <br>
                         Gender :
                         <br>
-                        <input type="radio" name="gender" id ="female" value="female" <%= "female".equals(rs.getString("user_gender")) ? "checked" : ""%>>
+                        <input type="radio" name="gender" id ="female" disabled value="female" <%= "female".equals(rs.getString("user_gender")) ? "checked" : ""%>>
                         <label for="female">Female</label>
                         <br>
-                        <input type="radio" name="gender" id ="male" value="male" <%= "male".equals(rs.getString("user_gender")) ? "checked" : ""%>>
+                        <input type="radio" name="gender" id ="male" disabled value="male" <%= "male".equals(rs.getString("user_gender")) ? "checked" : ""%>>
                         <label for="male">Male</label>
                         <br>
-                        <input type="radio" name="gender" id ="none" value="none" <%= "none".equals(rs.getString("user_gender")) ? "checked" : ""%>>
+                        <input type="radio" name="gender" id ="none" disabled value="none" <%= "none".equals(rs.getString("user_gender")) ? "checked" : ""%>>
                         <label for="none">Rather Not Say</label>
-                    </div>
-                    <div class="form-error left">
-                        <%
-                            String errorGender = (String) session.getAttribute("errorGender");
-            
-                            if(errorGender != null){
-                                out.println(errorGender);
-                            }
-                        %>
                     </div>
                     <div class="form-radio-item left">
                         <br>
@@ -141,13 +105,6 @@
             </div>
         </div>
     </div>
-
-    <%
-        session.setAttribute("errorEmail", null);
-        session.setAttribute("errorName", null);
-        session.setAttribute("errorPhoneNumber", null);
-        session.setAttribute("errorGender", null);
-    %>
 
     <div class="footer" id="footer">
         <%@ include file="/headerfooter/footer.jsp" %>

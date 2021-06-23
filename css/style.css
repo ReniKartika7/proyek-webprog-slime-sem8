@@ -1140,6 +1140,27 @@ table tbody tr:nth-of-type(even){
     }
 }
 
+/* About Us */
+.about-us. .col {
+    position: relative;
+    width: 100%;
+}
+
+.about-us .col .about-us-desc{
+    position: relative;
+    width: 85%;
+    max-width: 85%;
+    margin: 1rem auto;
+    text-align: justify;
+    padding: 2rem;
+    background-color: var(--lighter-yellow);
+    border-radius: 10px;
+}
+
+.about-us-img img{
+    width: 30%;
+    margin: auto;
+}
 
 /* Footer */
 #footer{

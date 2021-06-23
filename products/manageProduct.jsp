@@ -89,8 +89,8 @@
                                 <td><%= rs.getString("snack_name") %></td>
                                 <td><%= rs.getInt("snack_price") %></td>
                                 <td><%= rs.getInt("snack_stock") %></td>
-                                <td><%= rs.getString("snack_category_name") %></td>
                                 <td><%= rs.getString("snack_cover_url") %></td>
+                                <td><%= rs.getString("snack_category_name") %></td>
                                 <td><%= rs.getString("snack_detail") %></td>
                                 <td>
                                     <div>

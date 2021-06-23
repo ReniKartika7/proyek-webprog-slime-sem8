@@ -5,21 +5,23 @@
     <div class="row">
         <div class="col">
             <div class="footer-logo">Slime</div>
-            <div class="footer-def">Lorem ipsumhahahaha hihihi huhuhuLorem ipsumhahahaha hihihi huhuhuLorem ipsumhahahaha hihihi huhuhuLorem ipsumhahahaha hihihi huhuhuLorem ipsumhahahaha hihihi huhuhu</div>
+            <div class="footer-def">Snack Lives in My Everyday <br>
+                Find the right snack just for you in SLIME! We offer affordable, high-grade, pretty, and most important of all, cute imported snacks right on your doorsteps. Become a SLIMER today.
+                </div>
         </div>
         <div class="col">
             <div class="footer-title down">Follow us on</div>
             <div class="footer-sosmed">
-                <a href="mailto:reni.hnl@gmail.com" target="_blank">
+                <a href="https://www.google.com/intl/id/gmail/about/#" target="_blank">
                     <i class="far fa-envelope"></i>
                 </a>
-                <a href="https://www.instagram.com/renikartika_/" target="_blank">
+                <a href="https://www.instagram.com/" target="_blank">
                     <i class="fab fa-instagram"></i>
                 </a>
-                <a href="https://www.linkedin.com/in/reni-kartika/" target="_blank">
+                <a href="https://www.twitter.com/" target="_blank">
                     <i class="fab fa-twitter"></i>
                 </a>
-                <a href="https://www.kaggle.com/renikartika" target="_blank">
+                <a href="https://www.youtube.com/" target="_blank">
                     <i class="fab fa-youtube"></i>
                 </a>
             </div>
@@ -28,9 +30,9 @@
     <hr>
     <div class="row">
         <div class="col center">
-            <div class="footer-title">Payment Option</div>
+            <div class="footer-title">Copyright</div>
             <div class="footer-payment">
-                Gopay, ovo, shopeepay, dana
+                &copy; Slime 2021
             </div>
         </div>
     </div>
